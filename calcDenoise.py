@@ -5,11 +5,10 @@ from skimage.metrics import structural_similarity
 from sklearn.metrics import mean_squared_error
 import argparse
 
-parser = argparse.ArgumentParser(description='Demo MPRNet')
-parser.add_argument('--name', default='MPRNet', type=str, help='Input images')
+parser = argparse.ArgumentParser(description='calc denoise')
+parser.add_argument('--out', default='MPRNet', type=str, help='Input images')
 args = parser.parse_args()
-name = args.name
-out = os.path.join('/content/drive/MyDrive/', name)
+out = args.out
 
 noises = ['salt_pepper', 'gaussian', 'poisson', 'speckle']
 images = ['barbara', 'boat', 'chronometer', 'lena', 'mandril', 'peppers']
