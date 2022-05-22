@@ -9,12 +9,12 @@ parser = argparse.ArgumentParser(description='Demo MPRNet')
 parser.add_argument('--name', default='MPRNet', type=str, help='Input images')
 args = parser.parse_args()
 name = args.name
+out = os.path.join('/content/drive/MyDrive/', name)
 
 noises = ['salt_pepper', 'gaussian', 'poisson', 'speckle']
 images = ['barbara', 'boat', 'chronometer', 'lena', 'mandril', 'peppers']
-out = 'tex/img/denoise'
 
-results = open(os.path.join('/content/out/', name + '.csv'), 'w')
+results = open(os.path.join(out+ '.csv'), 'w')
 writer = csv.writer(results)
 
 for noise in noises:
