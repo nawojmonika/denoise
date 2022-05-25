@@ -43,7 +43,7 @@ load_file = run_path("./MPRNet.py")
 model = load_file['MPRNet']()
 model.cuda()
 
-weights = os.path.join("./models", "MPRNet.pth")
+weights = os.path.join("/content/drive/models", "MPRNet.pth")
 load_checkpoint(model, weights)
 model.eval()
 
