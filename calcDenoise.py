@@ -9,7 +9,7 @@ parser = argparse.ArgumentParser(description='calc denoise')
 parser.add_argument('--name', default='MPRNet', type=str, help='Input images')
 args = parser.parse_args()
 name = args.name
-out = './output'
+out = '/content/denoise/output'
 
 noises = ['salt_pepper', 'gaussian', 'poisson', 'speckle']
 images = ['barbara', 'boat', 'chronometer', 'lena', 'mandril', 'peppers']
@@ -24,9 +24,9 @@ for noise in noises:
         os.makedirs(path)
 
     for image in images:
-        base = cv2.imread(os.path.join('./ground', image + '.pgm'), cv2.IMREAD_GRAYSCALE)
+        base = cv2.imread(os.path.join('/content/denoise/ground', image + '.pgm'), cv2.IMREAD_GRAYSCALE)
         
-        in_path = os.path.join('./input', noise, image + '.png')
+        in_path = os.path.join('/content/denoise/input', noise, image + '.png')
         img = cv2.imread(in_path, cv2.IMREAD_GRAYSCALE)
 
         out_path = os.path.join(path, image + '.png')

@@ -25,8 +25,8 @@ def load_checkpoint(model, weights):
             new_state_dict[name] = v
         model.load_state_dict(new_state_dict)
 
-inp_dir = './input'
-out_dir = './output'
+inp_dir = '/content/denoise/input'
+out_dir = '/content/denoise/output'
 
 os.makedirs(out_dir, exist_ok=True)
 
@@ -39,7 +39,7 @@ if len(files) == 0:
     raise Exception(f"No files found at {inp_dir}")
 
 # Load corresponding model architecture and weights
-load_file = run_path("./MPRNet.py")
+load_file = run_path("/content/denoise/MPRNet.py")
 model = load_file['MPRNet']()
 model.cuda()
 
