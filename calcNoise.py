@@ -5,13 +5,13 @@ from skimage.metrics import structural_similarity
 from sklearn.metrics import mean_squared_error
 import argparse
 
-parser = argparse.ArgumentParser(description='calc denoise')
-parser.add_argument('--name', default='MPRNet', type=str, help='Input images')
+parser = argparse.ArgumentParser(description='calc noise')
+parser.add_argument('--name', default='MPRNet', type=str, help='Algorithm name')
 args = parser.parse_args()
 name = args.name
 out = '/content/denoise/output'
 
-noises = ['salt_pepper', 'gaussian', 'poisson', 'speckle']
+noises = os.listdir('./input')
 images = ['barbara', 'boat', 'chronometer', 'lena', 'mandril', 'peppers']
 
 results = open(os.path.join(out+ '.csv'), 'w')

@@ -9,6 +9,12 @@ from collections import OrderedDict
 from natsort import natsorted
 from glob import glob
 import cv2
+import argparse
+
+parser = argparse.ArgumentParser(description='calc denoise')
+parser.add_argument('--input', default='/content/denoise/input', type=str, help='Input images')
+parser.add_argument('--output', default='/content/denoise/output', type=str, help='Output images')
+args = parser.parse_args()
 
 def save_img(filepath, img):
     cv2.imwrite(filepath,cv2.cvtColor(img, cv2.COLOR_RGB2BGR))
@@ -25,8 +31,8 @@ def load_checkpoint(model, weights):
             new_state_dict[name] = v
         model.load_state_dict(new_state_dict)
 
-inp_dir = '/content/denoise/input'
-out_dir = '/content/denoise/output'
+inp_dir = args.input
+out_dir = args.output
 
 os.makedirs(out_dir, exist_ok=True)
 
