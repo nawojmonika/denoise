@@ -17,7 +17,7 @@ images = ['barbara', 'boat', 'chronometer', 'lena', 'mandril', 'peppers']
 
 for noise in noises:
     path = os.path.join(input, noise)
-    results = open(os.path.join(path + '.csv'), 'w')
+    results = open(os.path.join(path, 'results' + '.csv'), 'w')
     writer = csv.writer(results)
 
     if not os.path.exists(path):
@@ -37,4 +37,4 @@ for noise in noises:
         (ssim, diff) = structural_similarity(ground, denoiser_img, full=True)
         writer.writerow([round(mse, 3), round(psnr, 3), round(ssim, 3)])
         
-        print(f"Results saved at {path}")
+    print(f"Results saved at {path}")
