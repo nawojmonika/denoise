@@ -11,7 +11,7 @@ args = parser.parse_args()
 name = args.name
 out = '/content/denoise/output'
 
-noises = os.listdir('./input')
+noises = os.listdir('/content/denoise/input')
 images = ['barbara', 'boat', 'chronometer', 'lena', 'mandril', 'peppers']
 
 results = open(os.path.join(out+ '.csv'), 'w')
