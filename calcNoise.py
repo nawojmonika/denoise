@@ -19,6 +19,7 @@ for noise in noises:
     path = os.path.join(input, noise)
     results = open(os.path.join(path, 'results' + '.csv'), 'w')
     writer = csv.writer(results)
+    writer.writerow(['MSE', 'PSNR', 'SSIM'])
 
     if not os.path.exists(path):
         os.makedirs(path)
