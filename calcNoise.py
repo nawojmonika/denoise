@@ -9,7 +9,7 @@ parser = argparse.ArgumentParser(description='calc noise')
 parser.add_argument('--name', default='MPRNet', type=str, help='Algorithm name')
 args = parser.parse_args()
 name = args.name
-input = '/content/output'
+input = os.path.join('/content/output', name)
 
 noises = os.listdir('/content/denoise/input')
 images = ['barbara', 'boat', 'chronometer', 'lena', 'mandril', 'peppers']

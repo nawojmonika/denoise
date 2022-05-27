@@ -26,7 +26,7 @@ def load_checkpoint(model, weights):
         model.load_state_dict(new_state_dict)
 
 inp_dir = '/content/denoise/input'
-out_dir = '/content/output'
+out_dir = '/content/output/MPRNet'
 noises = os.listdir(inp_dir)
 
 # Load corresponding model architecture and weights
