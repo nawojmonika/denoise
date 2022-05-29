@@ -7,9 +7,11 @@ import argparse
 
 parser = argparse.ArgumentParser(description='calc noise')
 parser.add_argument('--name', default='MPRNet', type=str, help='Algorithm name')
+parser.add_argument('--dataset', default='sidd', type=str, help='Dataset')
 args = parser.parse_args()
 name = args.name
-input = os.path.join('/content/output', name)
+dataset = args.dataset
+input = os.path.join('/content/output', name, dataset)
 
 noises = os.listdir('/content/denoise/input')
 images = ['barbara', 'boat', 'chronometer', 'lena', 'mandril', 'peppers']

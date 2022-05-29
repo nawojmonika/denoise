@@ -9,6 +9,15 @@ from collections import OrderedDict
 from natsort import natsorted
 from glob import glob
 import cv2
+import argparse
+
+
+parser = argparse.ArgumentParser(description='denoise')
+parser.add_argument('--name', default='MPRNet', type=str, help='Algorithm name')
+parser.add_argument('--dataset', default='sidd', type=str, help='Dataset')
+args = parser.parse_args()
+name = args.name
+dataset = args.dataset
 
 def save_img(filepath, img):
     cv2.imwrite(filepath,cv2.cvtColor(img, cv2.COLOR_RGB2BGR))
@@ -16,9 +25,9 @@ def save_img(filepath, img):
 def load_checkpoint(model, weights):
     checkpoint = torch.load(weights)
     try:
-        model.load_state_dict(checkpoint["state_dict"])
+        model.load_state_dict(checkpoint['state_dict'])
     except:
-        state_dict = checkpoint["state_dict"]
+        state_dict = checkpoint['state_dict']
         new_state_dict = OrderedDict()
         for k, v in state_dict.items():
             name = k[7:] # remove `module.`
@@ -26,15 +35,15 @@ def load_checkpoint(model, weights):
         model.load_state_dict(new_state_dict)
 
 inp_dir = '/content/denoise/input'
-out_dir = '/content/output/MPRNet'
+out_dir = os.path.join('/content/output', name, dataset)
 noises = os.listdir(inp_dir)
 
 # Load corresponding model architecture and weights
-load_file = run_path("/content/denoise/MPRNet.py")
-model = load_file['MPRNet']()
+load_file = run_path(os.path.join('/content/denoise', name + '.py'))
+model = load_file[name]()
 model.cuda()
 
-weights = os.path.join("/content/drive/MyDrive/models", "MPRNet.pth")
+weights = os.path.join('/content/drive/MyDrive/models', name + '_' + dataset + '.pth')
 load_checkpoint(model, weights)
 model.eval()
 
@@ -51,7 +60,7 @@ for noise in noises:
                     + glob(os.path.join(input_path, '*.PNG')))
 
     if len(files) == 0:
-        raise Exception(f"No files found at {input_path}")
+        raise Exception(f'No files found at {input_path}')
 
 
     for file_ in files:
@@ -79,4 +88,4 @@ for noise in noises:
         f = os.path.splitext(os.path.split(file_)[-1])[0]
         save_img((os.path.join(output_path, f+'.png')), restored)
 
-    print(f"Files saved at {output_path}")
+    print(f'Files saved at {output_path}')
