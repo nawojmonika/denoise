@@ -132,9 +132,9 @@ class RRG(nn.Module):
 ##########################################################################
 
 
-class DenoiseNet(nn.Module):
+class CycleISP(nn.Module):
     def __init__(self, conv=conv):
-        super(DenoiseNet, self).__init__()
+        super(CycleISP, self).__init__()
         num_rrg = 4
         num_dab = 8
         n_feats = 64

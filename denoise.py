@@ -76,16 +76,18 @@ for noise in noises:
 
         with torch.no_grad():
             restored = model(input_)
-        restored = restored[0]
-        restored = torch.clamp(restored, 0, 1)
 
-        # Unpad the output
-        restored = restored[:,:,:h,:w]
+            if name == 'MPRNet':
+                restored = restored[0]
+            restored = torch.clamp(restored, 0, 1)
 
-        restored = restored.permute(0, 2, 3, 1).cpu().detach().numpy()
-        restored = img_as_ubyte(restored[0])
+            # Unpad the output
+            restored = restored[:,:,:h,:w]
 
-        f = os.path.splitext(os.path.split(file_)[-1])[0]
-        save_img((os.path.join(output_path, f+'.png')), restored)
+            restored = restored.permute(0, 2, 3, 1).cpu().detach().numpy()
+            restored = img_as_ubyte(restored[0])
+
+            f = os.path.splitext(os.path.split(file_)[-1])[0]
+            save_img((os.path.join(output_path, f+'.png')), restored)
 
     print(f'Files saved at {output_path}')
