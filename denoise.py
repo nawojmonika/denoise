@@ -35,7 +35,6 @@ def load_checkpoint(model, weights):
         model.load_state_dict(new_state_dict)
 
 inp_dir = '/content/denoise/input'
-out_dir = os.path.join('/content/output', name, dataset)
 noises = os.listdir(inp_dir)
 
 # Load corresponding model architecture and weights
@@ -51,7 +50,7 @@ img_multiple_of = 8
 
 for noise in noises:
     input_path = os.path.join(inp_dir, noise)
-    output_path = os.path.join(out_dir, noise)
+    output_path = os.path.join('/content/output', noise, name, dataset)
     os.makedirs(output_path, exist_ok=True)
 
     files = natsorted(glob(os.path.join(input_path, '*.jpg'))

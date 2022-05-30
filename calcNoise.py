@@ -11,14 +11,13 @@ parser.add_argument('--dataset', default='sidd', type=str, help='Dataset')
 args = parser.parse_args()
 name = args.name
 dataset = args.dataset
-input = os.path.join('/content/output', name, dataset)
 
 noises = os.listdir('/content/denoise/input')
 images = ['barbara', 'boat', 'chronometer', 'lena', 'mandril', 'peppers']
 
 
 for noise in noises:
-    path = os.path.join(input, noise)
+    path = os.path.join('/content/output', noise, name, dataset)
     results = open(os.path.join(path, 'results.csv'), 'w')
     writer = csv.writer(results)
     writer.writerow(['MSE', 'PSNR', 'SSIM'])

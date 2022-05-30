@@ -31,10 +31,9 @@ noises = os.listdir(inp_dir)
 
 for filter in filters: 
     name, add_filter = filter
-    input = os.path.join('/content/output', name)
 
     for noise in noises:
-        path = os.path.join(input, noise)
+        path = os.path.join('/content/output', noise, name)
 
         if not os.path.exists(path):
             os.makedirs(path)
