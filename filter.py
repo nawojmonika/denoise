@@ -1,13 +1,27 @@
 import cv2
 import os
 import csv
+import numpy as np
 from skimage.metrics import structural_similarity
 from sklearn.metrics import mean_squared_error
-from filter.gaussian import gaussian_filter
-from filter.median import median_filter
-from filter.wiener import wiener_filter
-from filter.bilateral import bilateral_filter
+from scipy.signal import wiener
 
+def gaussian_filter(img):
+    blur = cv2.GaussianBlur(img,(5,5),0)
+    return blur
+
+def median_filter(img):
+    median = cv2.medianBlur(img,5)    
+    return median
+
+def wiener_filter(img):
+    filter = wiener(img, (5, 5), 0.7)
+    return filter.astype(np.uint8)
+
+def bilateral_filter(img):
+    bilateral = cv2.bilateralFilter(img,9,75,75)    
+    return bilateral
+    
 filters = [['gaussian', gaussian_filter], ['median', median_filter], ['wiener', wiener_filter], ['bilateral', bilateral_filter]]
 images = ['barbara', 'boat', 'chronometer', 'lena', 'mandril', 'peppers']
 
