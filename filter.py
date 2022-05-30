@@ -21,7 +21,7 @@ def wiener_filter(img):
 def bilateral_filter(img):
     bilateral = cv2.bilateralFilter(img,9,75,75)    
     return bilateral
-    
+
 filters = [['gaussian', gaussian_filter], ['median', median_filter], ['wiener', wiener_filter], ['bilateral', bilateral_filter]]
 images = ['barbara', 'boat', 'chronometer', 'lena', 'mandril', 'peppers']
 
@@ -35,22 +35,22 @@ for filter in filters:
 
     for noise in noises:
         path = os.path.join(input, noise)
-        results = open(os.path.join(path, 'results' + '.csv'), 'w')
-        writer = csv.writer(results)
-        writer.writerow(['MSE', 'PSNR', 'SSIM'])
 
         if not os.path.exists(path):
             os.makedirs(path)
+
+        results = open(os.path.join(path, 'results' + '.csv'), 'w')
+        writer = csv.writer(results)
+        writer.writerow(['MSE', 'PSNR', 'SSIM'])
 
         for image in images:
             ground = cv2.imread(os.path.join('/content/denoise/ground', image + '.pgm'), cv2.IMREAD_GRAYSCALE)
             
             in_path = os.path.join('/content/denoise/input', noise, image + '.png')
-            img = cv2.imread(in_path, cv2.IMREAD_GRAYSCALE)
-
             out_path = os.path.join(path, image + '.png')
+            img = cv2.imread(in_path, cv2.IMREAD_GRAYSCALE)
             
-            filter_img = add_filter(out_path, cv2.IMREAD_GRAYSCALE)
+            filter_img = add_filter(img)
             cv2.imwrite(out_path, filter_img)
             mse = mean_squared_error(ground, filter_img)
             psnr = cv2.PSNR(ground, filter_img)
