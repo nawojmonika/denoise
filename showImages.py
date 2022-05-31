@@ -23,11 +23,11 @@ fig = plt.figure(figsize=(10, 7))
 files = natsorted(glob(path, recursive=True))
 
 for i, file in enumerate(files):
-fig.add_subplot(rows, col, i+1)
-image = cv2.imread(file)
-plt.imshow(image)
-plt.axis('off')
-if showCaptions == False:
-    plt.title(i)
-else:
-    plt.title(captions[i])
+    fig.add_subplot(rows, cols, i+1)
+    image = cv2.imread(file)
+    plt.imshow(image)
+    plt.axis('off')
+    if showCaptions == False:
+        plt.title(i)
+    else:
+        plt.title(captions[i])
