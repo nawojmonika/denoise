@@ -42,7 +42,7 @@ load_file = run_path(os.path.join('/content/denoise', name + '.py'))
 model = load_file[name]()
 model.cuda()
 
-weights = os.path.join('/content/drive/MyDrive/models', name + '_' + dataset + '.pth')
+weights = os.path.join('/content/models', name + '_' + dataset + '.pth')
 load_checkpoint(model, weights)
 model.eval()
 
