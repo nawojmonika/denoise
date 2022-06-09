@@ -3,7 +3,7 @@ import csv
 from natsort import natsorted
 from glob import glob
 
-captions = ['CycleISP-DND', 'CycleISP-SIDD', 'MPRNet-SIDD', 'Filtr dwustronny', 'Filtr Gaussowski', 'Filtr medianowy', 'Filtr Wienera']
+captions = ['CycleISP-SIDD', 'MPRNet-RENOIR', 'MPRNet-SIDD', 'Filtr dwustronny', 'Filtr Gaussowski', 'Filtr medianowy', 'Filtr Wienera']
 images = ['barbara', 'boat', 'chronometer', 'lena', 'mandril', 'peppers']
 
 noises = os.listdir('/content/output')
@@ -14,7 +14,7 @@ for noise in noises:
       path = os.path.join('/content/output', noise, image + '.csv')
       results = open(path, 'w')
       writer = csv.writer(results)
-      writer.writerow(['', 'MSE', 'PSNR', 'SSIM'])
+      writer.writerow(['Algorytm', 'MSE', 'PSNR', 'SSIM'])
       for j, file in enumerate(files):
          with open(file) as fd:
           reader=csv.reader(fd)
