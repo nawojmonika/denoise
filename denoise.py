@@ -20,7 +20,7 @@ name = args.name
 dataset = args.dataset
 
 def save_img(filepath, img):
-    cv2.imwrite(filepath,cv2.cvtColor(img, cv2.COLOR_RGB2BGR))
+    cv2.imwrite(filepath,cv2.cvtColor(cv2.cvtColor(img, cv2.COLOR_RGB2BGR), cv2.COLOR_BGR2GRAY))
 
 def load_checkpoint(model, weights):
     checkpoint = torch.load(weights)
