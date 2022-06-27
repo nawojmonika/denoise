@@ -20,7 +20,7 @@ for noise in noises:
     path = os.path.join('/content/output', noise, name, dataset)
     results = open(os.path.join(path, 'results.csv'), 'w')
     writer = csv.writer(results)
-    writer.writerow(['MSE', 'PSNR', 'SSIM'])
+    writer.writerow(['', 'MSE', 'PSNR', 'SSIM'])
 
     if not os.path.exists(path):
         os.makedirs(path)
@@ -37,6 +37,6 @@ for noise in noises:
         mse = mean_squared_error(ground, denoiser_img)
         psnr = cv2.PSNR(ground, denoiser_img)
         (ssim, diff) = structural_similarity(ground, denoiser_img, full=True)
-        writer.writerow([round(mse, 3), round(psnr, 3), round(ssim, 3)])
+        writer.writerow([image, round(mse, 3), round(psnr, 3), round(ssim, 3)])
         
     print(f"Results saved at {path}")
