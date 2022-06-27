@@ -3,7 +3,7 @@ import csv
 from natsort import natsorted
 from glob import glob
 
-captions = ['CycleISP-RENOIR','CycleISP-SIDD', 'MPRNet-RENOIR', 'MPRNet-SIDD', 'Filtr dwustronny', 'Filtr Gaussowski', 'Filtr medianowy', 'Filtr Wienera']
+captions = ['CycleISP-RENOIR','CycleISP-SIDD', 'CycleISP-SIDD-RENOIR', 'MPRNet-RENOIR', 'MPRNet-SIDD', 'MPRNet-SIDD-RENOIR', 'Filtr dwustronny', 'Filtr Gaussowski', 'Filtr medianowy', 'Filtr Wienera']
 images = ['barbara', 'boat', 'chronometer', 'lena', 'mandril', 'peppers']
 
 noises = os.listdir('/content/output')
