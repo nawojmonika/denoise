@@ -34,27 +34,10 @@ def load_checkpoint(model, weights):
             new_state_dict[name] = v
         model.load_state_dict(new_state_dict)
 
-inp_dir = '/content/denoise/input'
-noises = os.listdir(inp_dir)
-
-# Load corresponding model architecture and weights
-load_file = run_path(os.path.join('/content/denoise', name + '.py'))
-model = load_file[name]()
-model.cuda()
-
-weights = os.path.join('/content/models', name + '_' + dataset + '.pth')
-load_checkpoint(model, weights)
-model.eval()
-
-img_multiple_of = 8
-
-for noise in noises:
-    input_path = os.path.join(inp_dir, noise)
-    output_path = os.path.join('/content/output', noise, name, dataset)
-    os.makedirs(output_path, exist_ok=True)
-
+def denoise(input_path, output_path):
     files = natsorted(glob(os.path.join(input_path, '*.jpg'))
                     + glob(os.path.join(input_path, '*.JPG'))
+                    + glob(os.path.join(input_path, '*.pgm'))
                     + glob(os.path.join(input_path, '*.png'))
                     + glob(os.path.join(input_path, '*.PNG')))
 
@@ -90,3 +73,32 @@ for noise in noises:
             save_img((os.path.join(output_path, f+'.png')), restored)
 
     print(f'Files saved at {output_path}')
+
+inp_dir = '/content/denoise/input'
+noises = os.listdir(inp_dir)
+noise_datasets = ['RENOIR', 'SIDD']
+
+# Load corresponding model architecture and weights
+load_file = run_path(os.path.join('/content/denoise', name + '.py'))
+model = load_file[name]()
+model.cuda()
+
+weights = os.path.join('/content/models', name + '_' + dataset + '.pth')
+load_checkpoint(model, weights)
+model.eval()
+
+img_multiple_of = 8
+
+for noise in noises:
+    if noise == 'real':
+        for real_dataset in noise_datasets:
+            input_path = os.path.join(inp_dir, noise, real_dataset)
+            output_path = os.path.join('/content/output', noise, name, dataset)
+            os.makedirs(output_path, exist_ok=True)
+            denoise(input_path, output_path)
+
+    else:
+        input_path = os.path.join(inp_dir, noise)
+        output_path = os.path.join('/content/output', noise, name, dataset)
+        os.makedirs(output_path, exist_ok=True)
+        denoise(input_path, output_path)

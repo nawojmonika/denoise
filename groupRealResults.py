@@ -4,9 +4,7 @@ from natsort import natsorted
 from glob import glob
 
 captions = ['CycleISP-RENOIR', 'CycleISP-SIDD-RENOIR', 'CycleISP-SIDD', 'MPRNet-RENOIR', 'MPRNet-SIDD-RENOIR', 'MPRNet-SIDD', 'Filtr dwustronny', 'Filtr Gaussowski', 'Filtr medianowy', 'Filtr Wienera']
-images = ['barbara', 'boat', 'chronometer', 'lena', 'mandril', 'peppers']
-noises = ['gaussian', 'poisson', 'salt_pepper', 'speckle']
-
+noises = os.listdir('/content/output')
 for noise in noises:
     path = os.path.join('/content/output', noise, '**', 'results.csv')
     files = natsorted(glob(path, recursive=True))
