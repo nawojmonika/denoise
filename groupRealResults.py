@@ -4,12 +4,13 @@ from natsort import natsorted
 from glob import glob
 
 captions = ['CycleISP-RENOIR', 'CycleISP-SIDD-RENOIR', 'CycleISP-SIDD', 'MPRNet-RENOIR', 'MPRNet-SIDD-RENOIR', 'MPRNet-SIDD', 'Filtr dwustronny', 'Filtr Gaussowski', 'Filtr medianowy', 'Filtr Wienera']
-noises = os.listdir('/content/output')
-for noise in noises:
-    path = os.path.join('/content/output', noise, '**', 'results.csv')
+datasets = ['SIDD', 'RENOIR']
+
+for dataset in datasets:
+    path = os.path.join('/content/output/real', dataset, '**', 'results.csv')
     files = natsorted(glob(path, recursive=True))
-    for i, image in enumerate(images):
-      path = os.path.join('/content/output', noise, image + '.csv')
+    for i in range(6):
+      path = os.path.join('/content/output/real', dataset, i + '.csv')
       results = open(path, 'w')
       writer = csv.writer(results)
       writer.writerow(['Algorytm', 'MSE', 'PSNR', 'SSIM'])
