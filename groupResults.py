@@ -18,6 +18,6 @@ for noise in noises:
       for j, file in enumerate(files):
          with open(file) as fd:
           reader=csv.reader(fd)
-          mse, psnr, ssim = [row for idx, row in enumerate(reader) if idx == i + 1][0]
+          img, mse, psnr, ssim = [row for idx, row in enumerate(reader) if idx == i + 1][0]
           writer.writerow([captions[j], mse, psnr, ssim])
-          print(f"Results saved at {path}")
+      print(f"Results saved at {path}")
