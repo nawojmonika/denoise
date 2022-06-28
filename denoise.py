@@ -38,6 +38,7 @@ def denoise(input_path, output_path):
     files = natsorted(glob(os.path.join(input_path, '*.jpg'))
                     + glob(os.path.join(input_path, '*.JPG'))
                     + glob(os.path.join(input_path, '*.pgm'))
+                    + glob(os.path.join(input_path, '*.bmp'))
                     + glob(os.path.join(input_path, '*.png'))
                     + glob(os.path.join(input_path, '*.PNG')))
 
