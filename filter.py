@@ -32,6 +32,14 @@ inp_dir = '/content/denoise/input'
 noises = os.listdir(inp_dir)
 
 def apply_filter(input_path, ground_path, output_path):
+    ground = natsorted(glob(os.path.join(ground_path, '*.png'))
+                    + glob(os.path.join(ground_path, '*.pgm'))
+                    + glob(os.path.join(ground_path, '*.bmp')))
+        
+    input = natsorted(glob(os.path.join(input_path, '*.png'))
+                    + glob(os.path.join(input_path, '*.pgm'))
+                    + glob(os.path.join(ground_path, '*.bmp')))
+                    
     for filter in filters: 
         name, add_filter = filter
         
@@ -43,12 +51,6 @@ def apply_filter(input_path, ground_path, output_path):
         results = open(os.path.join(path, 'results' + '.csv'), 'w')
         writer = csv.writer(results)
         writer.writerow(['', 'MSE', 'PSNR', 'SSIM'])
-
-        ground = natsorted(glob(os.path.join(ground_path, '*.png'))
-                    + glob(os.path.join(ground_path, '*.pgm')))
-        
-        input = natsorted(glob(os.path.join(input_path, '*.png'))
-                    + glob(os.path.join(input_path, '*.pgm')))
 
         for i, file in enumerate(input):
             img = cv2.imread(file, cv2.IMREAD_GRAYSCALE)
@@ -65,18 +67,15 @@ def apply_filter(input_path, ground_path, output_path):
             
         print(f"Results saved at {path}")
 
-
-
-
 for noise in noises:
     if noise == 'real':
         for dataset in noise_datasets:
-            input_path = os.path.join('/content/denoise/input', noise, dataset)
+            input_path = os.path.join('/content/denoise/input/real', dataset)
             ground_path = os.path.join('/content/denoise/ground', dataset)
-            output_path = os.path.join('/content/output', noise, dataset)
+            output_path = os.path.join('/content/output/real', dataset)
             apply_filter(input_path, ground_path, output_path)
     else:
         input_path = os.path.join('/content/denoise/input', noise)
-        ground_path = 'content/denoise/ground'
-        output_path = os.path.join('/content/output', noise, dataset)
+        ground_path = '/content/denoise/ground'
+        output_path = os.path.join('/content/output', noise)
         apply_filter(input_path, ground_path, output_path)
