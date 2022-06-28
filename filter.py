@@ -54,6 +54,6 @@ for filter in filters:
             mse = mean_squared_error(ground, filter_img)
             psnr = cv2.PSNR(ground, filter_img)
             (ssim, diff) = structural_similarity(ground, filter_img, full=True)
-            writer.writerow([round(mse, 3), round(psnr, 3), round(ssim, 3)])
+            writer.writerow([image, round(mse, 3), round(psnr, 3), round(ssim, 3)])
             
         print(f"Results saved at {path}")
