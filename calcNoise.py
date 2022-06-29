@@ -20,17 +20,14 @@ noise_datasets = ['RENOIR', 'SIDD']
 images = ['barbara', 'boat', 'chronometer', 'lena', 'mandril', 'peppers']
 
 for noise in noises:
-    path = os.path.join('/content/output', noise, name, dataset)
-    results = open(os.path.join(path, 'results.csv'), 'w')
-    writer = csv.writer(results)
-    writer.writerow(['', 'MSE', 'PSNR', 'SSIM'])
-
-    if not os.path.exists(path):
-        os.makedirs(path)
-
     if noise == 'real':
-        for dataset in noise_datasets:
-            ground_path = os.path.join('/content/denoise/ground', dataset)
+        for noise_dataset in noise_datasets:
+            path = os.path.join('/content/output', noise, name, dataset, noise_dataset)
+            results = open(os.path.join(path, 'results.csv'), 'w')
+            writer = csv.writer(results)
+            writer.writerow(['', 'MSE', 'PSNR', 'SSIM'])
+
+            ground_path = os.path.join('/content/denoise/ground', noise_dataset)
             ground = natsorted(glob(os.path.join(ground_path, '*.png'))
                     + glob(os.path.join(ground_path, '*.pgm')))
 
@@ -47,6 +44,13 @@ for noise in noises:
                 writer.writerow([i+1, round(mse, 3), round(psnr, 3), round(ssim, 3)])
 
     else: 
+        path = os.path.join('/content/output', noise, name, dataset)
+        results = open(os.path.join(path, 'results.csv'), 'w')
+        writer = csv.writer(results)
+        writer.writerow(['', 'MSE', 'PSNR', 'SSIM'])
+
+    if not os.path.exists(path):
+        os.makedirs(path)
         for image in images:
             ground = cv2.imread(os.path.join('/content/denoise/ground', image + '.pgm'), cv2.IMREAD_GRAYSCALE)
             out_path = os.path.join(path, image + '.png')
