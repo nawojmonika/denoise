@@ -5,7 +5,6 @@ import numpy as np
 from natsort import natsorted
 from glob import glob
 from skimage.metrics import structural_similarity
-from sklearn.metrics import mean_squared_error
 from scipy.signal import wiener
 
 def gaussian_filter(img):
@@ -50,7 +49,7 @@ def apply_filter(input_path, ground_path, output_path):
 
         results = open(os.path.join(path, 'results' + '.csv'), 'w')
         writer = csv.writer(results)
-        writer.writerow(['', 'MSE', 'PSNR', 'SSIM'])
+        writer.writerow(['', 'PSNR', 'SSIM'])
 
         for i, file in enumerate(input):
             img = cv2.imread(file, cv2.IMREAD_GRAYSCALE)
@@ -60,10 +59,9 @@ def apply_filter(input_path, ground_path, output_path):
             
             filter_img = add_filter(img)
             cv2.imwrite(out_path, filter_img)
-            mse = mean_squared_error(ground_img, filter_img)
             psnr = cv2.PSNR(ground_img, filter_img)
             (ssim, diff) = structural_similarity(ground_img, filter_img, full=True)
-            writer.writerow([image, round(mse, 3), round(psnr, 3), round(ssim, 3)])
+            writer.writerow([image, round(psnr, 3), round(ssim, 3)])
             
         print(f"Results saved at {path}")
 
