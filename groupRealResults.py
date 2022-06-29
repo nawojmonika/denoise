@@ -10,7 +10,7 @@ for dataset in datasets:
     path = os.path.join('/content/output/real', dataset, '**', 'results.csv')
     files = natsorted(glob(path, recursive=True))
     for i in range(6):
-      path = os.path.join('/content/output/real', dataset, i + '.csv')
+      path = os.path.join('/content/output/real', dataset, str(i+1) + '.csv')
       results = open(path, 'w')
       writer = csv.writer(results)
       writer.writerow(['Algorytm', 'MSE', 'PSNR', 'SSIM'])
