@@ -94,7 +94,7 @@ for noise in noises:
     if noise == 'real':
         for real_dataset in noise_datasets:
             input_path = os.path.join(inp_dir, noise, real_dataset)
-            output_path = os.path.join('/content/output', noise, name, dataset)
+            output_path = os.path.join('/content/output/real', real_dataset, name, dataset)
             os.makedirs(output_path, exist_ok=True)
             denoise(input_path, output_path)
 
