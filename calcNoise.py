@@ -6,7 +6,6 @@ from sklearn.metrics import mean_squared_error
 from natsort import natsorted
 from glob import glob
 import argparse
-from matplotlib import pyplot as plt
 
 parser = argparse.ArgumentParser(description='calc noise')
 parser.add_argument('--name', default='MPRNet', type=str, help='Algorithm name')
@@ -22,7 +21,7 @@ images = ['barbara', 'boat', 'chronometer', 'lena', 'mandril', 'peppers']
 for noise in noises:
     if noise == 'real':
         for noise_dataset in noise_datasets:
-            path = os.path.join('/content/output', noise, name, dataset, noise_dataset)
+            path = os.path.join('/content/output/real', noise_dataset, name, dataset)
             results = open(os.path.join(path, 'results.csv'), 'w')
             writer = csv.writer(results)
             writer.writerow(['', 'MSE', 'PSNR', 'SSIM'])
@@ -34,9 +33,6 @@ for noise in noises:
             for i, ground_path in enumerate(ground):
                 ground_img = cv2.imread(ground_path, cv2.IMREAD_GRAYSCALE)
                 out_path = os.path.join(path, str(i+1) + '.png')
-                # print(ground_path)
-                # print(out_path)
-        
                 denoised_img = cv2.imread(out_path, cv2.IMREAD_GRAYSCALE)
                 mse = mean_squared_error(ground_img, denoised_img)
                 psnr = cv2.PSNR(ground_img, denoised_img)
