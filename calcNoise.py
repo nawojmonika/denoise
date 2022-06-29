@@ -6,6 +6,7 @@ from sklearn.metrics import mean_squared_error
 from natsort import natsorted
 from glob import glob
 import argparse
+from matplotlib import pyplot as plt
 
 parser = argparse.ArgumentParser(description='calc noise')
 parser.add_argument('--name', default='MPRNet', type=str, help='Algorithm name')
@@ -32,28 +33,22 @@ for noise in noises:
             ground_path = os.path.join('/content/denoise/ground', dataset)
             ground = natsorted(glob(os.path.join(ground_path, '*.png'))
                     + glob(os.path.join(ground_path, '*.pgm')))
-            
-            in_path = os.path.join('/content/denoise/input', noise, dataset)
-            input = natsorted(glob(os.path.join(in_path, '*.png'))
-                    + glob(os.path.join(in_path, '*.pgm')))
 
-            for i, path in enumerate(input):
-                img = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
-                out_path = os.path.join(path, dataset, i + '.png')
-            
-                denoiser_img = cv2.imread(out_path, cv2.IMREAD_GRAYSCALE)
-                mse = mean_squared_error(ground, denoiser_img)
-                psnr = cv2.PSNR(ground, denoiser_img)
-                (ssim, diff) = structural_similarity(ground, denoiser_img, full=True)
-                writer.writerow([i, round(mse, 3), round(psnr, 3), round(ssim, 3)])
+            for i, ground_path in enumerate(ground):
+                ground_img = cv2.imread(ground_path, cv2.IMREAD_GRAYSCALE)
+                out_path = os.path.join(path, str(i+1) + '.png')
+                # print(ground_path)
+                # print(out_path)
+        
+                denoised_img = cv2.imread(out_path, cv2.IMREAD_GRAYSCALE)
+                mse = mean_squared_error(ground_img, denoised_img)
+                psnr = cv2.PSNR(ground_img, denoised_img)
+                (ssim, diff) = structural_similarity(ground_img, denoised_img, full=True)
+                writer.writerow([i+1, round(mse, 3), round(psnr, 3), round(ssim, 3)])
 
     else: 
         for image in images:
             ground = cv2.imread(os.path.join('/content/denoise/ground', image + '.pgm'), cv2.IMREAD_GRAYSCALE)
-            
-            in_path = os.path.join('/content/denoise/input', noise, image + '.png')
-            img = cv2.imread(in_path, cv2.IMREAD_GRAYSCALE)
-
             out_path = os.path.join(path, image + '.png')
             
             denoiser_img = cv2.imread(out_path, cv2.IMREAD_GRAYSCALE)
