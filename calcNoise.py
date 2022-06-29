@@ -45,8 +45,9 @@ for noise in noises:
         writer = csv.writer(results)
         writer.writerow(['', 'MSE', 'PSNR', 'SSIM'])
 
-    if not os.path.exists(path):
-        os.makedirs(path)
+        if not os.path.exists(path):
+            os.makedirs(path)
+            
         for image in images:
             ground = cv2.imread(os.path.join('/content/denoise/ground', image + '.pgm'), cv2.IMREAD_GRAYSCALE)
             out_path = os.path.join(path, image + '.png')
@@ -56,5 +57,5 @@ for noise in noises:
             psnr = cv2.PSNR(ground, denoiser_img)
             (ssim, diff) = structural_similarity(ground, denoiser_img, full=True)
             writer.writerow([image, round(mse, 3), round(psnr, 3), round(ssim, 3)])
-        
+            
     print(f"Results saved at {path}")
