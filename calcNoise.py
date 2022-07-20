@@ -27,14 +27,14 @@ for noise in noises:
 
             ground_path = os.path.join('/content/denoise/ground', noise_dataset)
             ground = natsorted(glob(os.path.join(ground_path, '*.png'))
-                    + glob(os.path.join(ground_path, '*.pgm')))
+                    + glob(os.path.join(ground_path, '*.bmp')))
 
             for i, ground_path in enumerate(ground):
-                ground_img = cv2.imread(ground_path, cv2.IMREAD_GRAYSCALE)
+                ground_img = cv2.imread(ground_path)
                 out_path = os.path.join(path, str(i+1) + '.png')
-                denoised_img = cv2.imread(out_path, cv2.IMREAD_GRAYSCALE)
+                denoised_img = cv2.imread(out_path)
                 psnr = cv2.PSNR(ground_img, denoised_img)
-                (ssim, diff) = structural_similarity(ground_img, denoised_img, full=True)
+                (ssim, diff) = structural_similarity(ground_img, denoised_img, full=True, multichannel=True)
                 writer.writerow([i+1, round(psnr, 3), round(ssim, 3)])
 
     else: 
@@ -47,12 +47,12 @@ for noise in noises:
             os.makedirs(path)
             
         for image in images:
-            ground = cv2.imread(os.path.join('/content/denoise/ground', image + '.pgm'), cv2.IMREAD_GRAYSCALE)
+            ground = cv2.imread(os.path.join('/content/denoise/ground', image + '.bmp'))
             out_path = os.path.join(path, image + '.png')
             
-            denoiser_img = cv2.imread(out_path, cv2.IMREAD_GRAYSCALE)
+            denoiser_img = cv2.imread(out_path)
             psnr = cv2.PSNR(ground, denoiser_img)
-            (ssim, diff) = structural_similarity(ground, denoiser_img, full=True)
+            (ssim, diff) = structural_similarity(ground, denoiser_img, full=True, multichannel=True)
             writer.writerow([image, round(psnr, 3), round(ssim, 3)])
             
     print(f"Results saved at {path}")
