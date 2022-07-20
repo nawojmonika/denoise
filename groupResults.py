@@ -4,7 +4,7 @@ from natsort import natsorted
 from glob import glob
 
 captions = ['CycleISP-RENOIR', 'CycleISP-SIDD-RENOIR', 'CycleISP-SIDD', 'MPRNet-RENOIR', 'MPRNet-SIDD-RENOIR', 'MPRNet-SIDD', 'Filtr dwustronny', 'Filtr Gaussowski', 'Filtr medianowy', 'Filtr Wienera']
-images = ['barbara', 'boat', 'chronometer', 'lena', 'mandril', 'peppers']
+images = ['baboon', 'barbara', 'boats', 'goldhill', 'lena', 'peppers']
 noises = ['gaussian', 'poisson', 'salt_pepper', 'speckle']
 
 for noise in noises:
