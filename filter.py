@@ -24,7 +24,7 @@ def bilateral_filter(img):
     return bilateral
 
 filters = [['gaussian', gaussian_filter], ['median', median_filter], ['wiener', wiener_filter], ['bilateral', bilateral_filter]]
-images = ['baboon', 'barbara', 'boats', 'cablecar', 'lena', 'peppers']
+images = ['barbara', 'boats', 'cablecar', 'lena', 'mandril', 'peppers']
 noise_datasets = ['RENOIR', 'SIDD']
 
 inp_dir = '/content/denoise/input'

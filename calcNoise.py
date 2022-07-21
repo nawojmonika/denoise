@@ -15,7 +15,7 @@ dataset = args.dataset
 
 noises = os.listdir('/content/denoise/input')
 noise_datasets = ['RENOIR', 'SIDD']
-images = ['baboon', 'barbara', 'boats', 'cablecar', 'lena', 'peppers']
+images = ['barbara', 'boats', 'cablecar', 'lena', 'mandril', 'peppers']
 
 for noise in noises:
     if noise == 'real':
