@@ -4,7 +4,7 @@ from natsort import natsorted
 from glob import glob
 from utils.names import getAlgorithmName
 
-noises = ['gaussian', 'poisson', 'salt_pepper', 'speckle', 'real']
+noises = os.listdir('/content/denoise/input')
 
 for noise in noises:
   basePath = os.path.join('/content/output/', noise)
