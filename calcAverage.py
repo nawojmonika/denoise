@@ -2,19 +2,16 @@ import os
 import csv
 from natsort import natsorted
 from glob import glob
-from utils.names import getAlgorithmName
+from utils.names import getAlgorithmName, getDatasets
 
 noises = os.listdir('/content/denoise/input')
+datasets = getDatasets()
 
-for noise in noises:
-  basePath = os.path.join('/content/output/', noise)
-  results = natsorted(glob(os.path.join(basePath, '**/results.csv'))
-                    + glob(os.path.join(basePath, '**/**/results.csv')))
+def writeResults(basePath, results):
   path = os.path.join(basePath, 'avgResults.csv')
   avgResults = open(path, 'w')
   writer = csv.writer(avgResults)
   writer.writerow(['Algorytm', 'PSNR', 'SSIM'])
-  
   for result in results:
     name = getAlgorithmName(result)
     avgPSNR = 0
@@ -28,3 +25,19 @@ for noise in noises:
           avgSSIM += float(ssim)
       writer.writerow([name, round(avgPSNR/6,3), round(avgSSIM/6,3)])
   print(f"Results saved at {path}")
+
+
+for noise in noises:
+  if noise == 'real':
+    for dataset in datasets:
+      basePath = os.path.join('/content/output/', noise, dataset.upper())
+      results = natsorted(glob(os.path.join(basePath, '**/results.csv')))
+      if len(results) > 0:
+        writeResults(basePath, results)
+  else:
+    basePath = os.path.join('/content/output/', noise)
+    results = natsorted(glob(os.path.join(basePath, '**/results.csv')))
+    writeResults(basePath, results)
+  
+  
+

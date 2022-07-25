@@ -1,4 +1,5 @@
-datasets = ['renoir', 'sidd', 'sidd-renoir']
+def getDatasets():
+  return ['renoir', 'sidd', 'sidd-renoir']
 
 def getFilterName(name):
   names = {
@@ -13,6 +14,7 @@ def getFilterName(name):
 def getAlgorithmName(path):
   arr = path.split('/')
   name = arr[len(arr) - 2]
+  datasets = getDatasets()
   if name in datasets:
     name = arr[len(arr) - 3] + '-' + name.upper()
   else:
