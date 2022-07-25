@@ -31,13 +31,11 @@ for noise in noises:
   if noise == 'real':
     for dataset in datasets:
       basePath = os.path.join('/content/output/', noise, dataset.upper())
-      results = natsorted(glob(os.path.join(basePath, '**/results.csv')))
+      results = natsorted(glob(os.path.join(basePath, '**/results.csv'))
+                        + glob(os.path.join(basePath, '**/**/results.csv')))
       if len(results) > 0:
         writeResults(basePath, results)
   else:
     basePath = os.path.join('/content/output/', noise)
     results = natsorted(glob(os.path.join(basePath, '**/results.csv')))
     writeResults(basePath, results)
-  
-  
-
