@@ -1,6 +1,9 @@
 def getDatasets():
   return ['renoir', 'sidd', 'sidd-renoir']
 
+def getTestDatasets():
+  return ['RENOIR', 'SIDD']
+
 def getFilterName(name):
   names = {
       'bilateral': 'Filtr dwustronny',
@@ -10,13 +13,15 @@ def getFilterName(name):
     }
   return names[name]
 
+def getNetworkNames():
+  return ['CycleISP', 'MPRNet']
 
 def getAlgorithmName(path):
   arr = path.split('/')
-  name = arr[len(arr) - 2]
+  name = arr[-3]
   datasets = getDatasets()
   if name in datasets:
-    name = arr[len(arr) - 3] + '-' + name.upper()
+    name = arr[-4] + '-' + name.upper()
   else:
     name = getFilterName(name)  
   return name

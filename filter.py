@@ -1,6 +1,5 @@
 import cv2
 import os
-import csv
 import numpy as np
 from natsort import natsorted
 from glob import glob
@@ -42,27 +41,19 @@ def apply_filter(input_path, ground_path, output_path):
                     
     for filter in filters: 
         name, add_filter = filter
-        
         path = os.path.join(output_path, name)
 
         if not os.path.exists(path):
             os.makedirs(path)
 
-        results = open(os.path.join(path, 'results' + '.csv'), 'w')
-        writer = csv.writer(results)
-        writer.writerow(['', 'PSNR', 'SSIM'])
 
-        for i, file in enumerate(input):
+        for file in input:
             img = cv2.imread(file)
-            ground_img = cv2.imread(ground[i])
             image = os.path.splitext(os.path.split(file)[-1])[0]
             out_path = os.path.join(path, image + '.png')
             
             filter_img = add_filter(img)
             cv2.imwrite(out_path, filter_img)
-            psnr = cv2.PSNR(ground_img, filter_img)
-            (ssim, diff) = structural_similarity(ground_img, filter_img, full=True, multichannel=True)
-            writer.writerow([image, round(psnr, 3), round(ssim, 3)])
             
         print(f"Results saved at {path}")
 
