@@ -4,10 +4,11 @@ import csv
 from skimage.metrics import structural_similarity
 from natsort import natsorted
 from glob import glob
-from utils.names import getTestDatasets, getNetworkNames
+from utils.names import getDatasets, getTestDatasets, getNetworkNames
 
 noises = os.listdir('/content/denoise/input')
-datasets = getTestDatasets()
+test_datasets = getTestDatasets()
+datasets = getDatasets()
 networks = getNetworkNames()
 
 def calcResults(path, dataset = ''):
@@ -38,13 +39,14 @@ def writeResults(basePath, test_dataset = ''):
       for dataset in datasets:
         path = os.path.join(basePath, algorithm, dataset)
         calcResults(path, test_dataset)
-    else: 
+    else:
       path = os.path.join(basePath, algorithm)
-      calcResults(path, test_dataset)
+      if os.path.isdir(path): 
+        calcResults(path, test_dataset)
 
 for noise in noises:
     if noise == 'real':
-        for dataset in datasets:
+        for dataset in test_datasets:
             basePath = os.path.join('/content/output/real', dataset)
             results = natsorted(glob(os.path.join(basePath, '**/*.png'))
                         + glob(os.path.join(basePath, '**/**/*.png')))

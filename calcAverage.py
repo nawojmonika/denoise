@@ -24,17 +24,16 @@ def writeResults(basePath, results):
           avgPSNR += float(psnr)
           avgSSIM += float(ssim)
       writer.writerow([name, round(avgPSNR/6,3), round(avgSSIM/6,3)])
-  print(f"Results saved at {path}/avgResults.csv")
+  print(f"Results saved at {path}")
 
 
 for noise in noises:
   if noise == 'real':
     for dataset in datasets:
       basePath = os.path.join('/content/output/', noise, dataset)
-      results = natsorted(glob(os.path.join(basePath, '**/results.csv'))
-                        + glob(os.path.join(basePath, '**/**/results.csv')))
+      results = natsorted(glob(os.path.join(basePath, '**/results.csv'), recursive=True))
       writeResults(basePath, results)
   else:
     basePath = os.path.join('/content/output/', noise)
-    results = natsorted(glob(os.path.join(basePath, '**/results.csv')))
+    results = natsorted(glob(os.path.join(basePath, '**/results.csv'), recursive=True))
     writeResults(basePath, results)

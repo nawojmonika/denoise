@@ -18,10 +18,10 @@ def getNetworkNames():
 
 def getAlgorithmName(path):
   arr = path.split('/')
-  name = arr[-3]
+  name = arr[-2]
   datasets = getDatasets()
   if name in datasets:
-    name = arr[-4] + '-' + name.upper()
+    name = arr[-3] + '-' + name.upper()
   else:
     name = getFilterName(name)  
   return name

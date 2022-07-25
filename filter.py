@@ -3,8 +3,8 @@ import os
 import numpy as np
 from natsort import natsorted
 from glob import glob
-from skimage.metrics import structural_similarity
 from scipy.signal import wiener
+from utils.names import getTestDatasets
 
 def gaussian_filter(img):
     blur = cv2.GaussianBlur(img,(5,5),0)
@@ -25,7 +25,7 @@ def bilateral_filter(img):
 
 filters = [['gaussian', gaussian_filter], ['median', median_filter], ['wiener', wiener_filter], ['bilateral', bilateral_filter]]
 images = ['barbara', 'boats', 'cablecar', 'lena', 'mandril', 'peppers']
-noise_datasets = ['RENOIR', 'SIDD']
+noise_datasets = getTestDatasets()
 
 inp_dir = '/content/denoise/input'
 noises = os.listdir(inp_dir)

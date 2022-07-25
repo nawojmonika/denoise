@@ -10,14 +10,7 @@ from natsort import natsorted
 from glob import glob
 import cv2
 import argparse
-
-
-parser = argparse.ArgumentParser(description='denoise')
-parser.add_argument('--name', default='MPRNet', type=str, help='Algorithm name')
-parser.add_argument('--dataset', default='sidd', type=str, help='Dataset')
-args = parser.parse_args()
-name = args.name
-dataset = args.dataset
+from utils.names import getTestDatasets, getDatasets, getNetworkNames
 
 def save_img(filepath, img):
     cv2.imwrite(filepath,cv2.cvtColor(img, cv2.COLOR_RGB2BGR))
@@ -77,29 +70,33 @@ def denoise(input_path, output_path):
 
 inp_dir = '/content/denoise/input'
 noises = os.listdir(inp_dir)
-noise_datasets = ['RENOIR', 'SIDD']
+models =  getNetworkNames()
+datasets = getDatasets()
+noise_datasets = getTestDatasets()
 
 # Load corresponding model architecture and weights
-load_file = run_path(os.path.join('/content/denoise', name + '.py'))
-model = load_file[name]()
-model.cuda()
+for name in models:
+    load_file = run_path(os.path.join('/content/denoise', name + '.py'))
+    model = load_file[name]()
+    model.cuda()
 
-weights = os.path.join('/content/models', name + '_' + dataset + '.pth')
-load_checkpoint(model, weights)
-model.eval()
+    for dataset in datasets:
+        weights = os.path.join('/content/models', name + '_' + dataset + '.pth')
+        load_checkpoint(model, weights)
+        model.eval()
 
-img_multiple_of = 8
+        img_multiple_of = 8
 
-for noise in noises:
-    if noise == 'real':
-        for real_dataset in noise_datasets:
-            input_path = os.path.join(inp_dir, noise, real_dataset)
-            output_path = os.path.join('/content/output/real', real_dataset, name, dataset)
-            os.makedirs(output_path, exist_ok=True)
-            denoise(input_path, output_path)
+        for noise in noises:
+            if noise == 'real':
+                for real_dataset in noise_datasets:
+                    input_path = os.path.join(inp_dir, noise, real_dataset)
+                    output_path = os.path.join('/content/output/real', real_dataset, name, dataset)
+                    os.makedirs(output_path, exist_ok=True)
+                    denoise(input_path, output_path)
 
-    else:
-        input_path = os.path.join(inp_dir, noise)
-        output_path = os.path.join('/content/output', noise, name, dataset)
-        os.makedirs(output_path, exist_ok=True)
-        denoise(input_path, output_path)
+            else:
+                input_path = os.path.join(inp_dir, noise)
+                output_path = os.path.join('/content/output', noise, name, dataset)
+                os.makedirs(output_path, exist_ok=True)
+                denoise(input_path, output_path)
