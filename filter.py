@@ -15,9 +15,10 @@ def median_filter(img):
     return median
 
 def wiener_filter(img):
-    img = img.astype('float64')
-    filter = wiener(img, (5,5,5), 0.7)
-    return filter.astype(np.uint8)
+  result = np.zeros(img.shape)
+  for i in range(3):
+    result[:,:,i] = wiener(img[:,:,i], [5,5], 0.7)
+  return result
 
 def bilateral_filter(img):
     bilateral = cv2.bilateralFilter(img,9,75,75)    
