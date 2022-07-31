@@ -7,7 +7,7 @@ from scipy.signal import wiener
 from utils.names import getTestDatasets
 
 def gaussian_filter(img):
-    blur = cv2.GaussianBlur(img,(5,5),0)
+    blur = cv2.GaussianBlur(img,(5,5),1)
     return blur
 
 def median_filter(img):
