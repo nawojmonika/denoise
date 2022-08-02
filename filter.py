@@ -17,7 +17,7 @@ def median_filter(img):
 def wiener_filter(img):
   result = np.zeros(img.shape)
   for i in range(3):
-    result[:,:,i] = wiener(img[:,:,i], [5,5], 0.7)
+    result[:,:,i] = wiener(img[:,:,i], [5,5], 0)
   return result
 
 def bilateral_filter(img):
