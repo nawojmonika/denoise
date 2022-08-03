@@ -109,7 +109,7 @@ for name in models:
                     (ssim, diff) = structural_similarity(gt_img, restored, full=True, multichannel=True)
                     total_ssim +=ssim
         
-        network_name = name + '_' + dataset.upper();
+        network_name = name + '-' + dataset.upper();
         qm_psnr = total_psnr / (40*32);
         qm_ssim = total_ssim / (40*32);
         writer.writerow([network_name, round(qm_psnr, 3), round(qm_ssim, 3)])
