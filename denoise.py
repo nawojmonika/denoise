@@ -9,7 +9,6 @@ from collections import OrderedDict
 from natsort import natsorted
 from glob import glob
 import cv2
-import argparse
 from utils.names import getTestDatasets, getDatasets, getNetworkNames
 
 def save_img(filepath, img):

@@ -31,11 +31,7 @@ noise_datasets = getTestDatasets()
 inp_dir = '/content/denoise/input'
 noises = os.listdir(inp_dir)
 
-def apply_filter(input_path, ground_path, output_path):
-    ground = natsorted(glob(os.path.join(ground_path, '*.png'))
-                    + glob(os.path.join(ground_path, '*.pgm'))
-                    + glob(os.path.join(ground_path, '*.bmp')))
-        
+def apply_filter(input_path, output_path):        
     input = natsorted(glob(os.path.join(input_path, '*.png'))
                     + glob(os.path.join(input_path, '*.pgm'))
                     + glob(os.path.join(input_path, '*.bmp')))     
@@ -62,11 +58,9 @@ for noise in noises:
     if noise == 'real':
         for dataset in noise_datasets:
             input_path = os.path.join('/content/denoise/input/real', dataset)
-            ground_path = os.path.join('/content/denoise/ground', dataset)
             output_path = os.path.join('/content/output/real', dataset)
-            apply_filter(input_path, ground_path, output_path)
+            apply_filter(input_path, output_path)
     else:
         input_path = os.path.join('/content/denoise/input', noise)
-        ground_path = '/content/denoise/ground'
         output_path = os.path.join('/content/output', noise)
-        apply_filter(input_path, ground_path, output_path)
+        apply_filter(input_path, output_path)
