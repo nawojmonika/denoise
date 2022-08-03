@@ -14,7 +14,7 @@ def wiener_filter(img):
   result = np.zeros(img.shape)
   for i in range(3):
     result[:,:,i] = wiener(img[:,:,i], [5,5], 0)
-  return result
+  return result.astype(np.uint8)
 
 def bilateral_filter(img):
     bilateral = cv2.bilateralFilter(img,9,75,75)    
