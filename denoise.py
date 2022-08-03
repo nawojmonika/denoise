@@ -61,6 +61,7 @@ noises = os.listdir(inp_dir)
 models =  getNetworkNames()
 datasets = getDatasets()
 noise_datasets = getTestDatasets()
+img_multiple_of = 8
 
 # Load corresponding model architecture and weights
 for name in models:
@@ -72,8 +73,6 @@ for name in models:
         weights = os.path.join('/content/models', name + '_' + dataset + '.pth')
         load_checkpoint(model, weights)
         model.eval()
-
-        img_multiple_of = 8
 
         for noise in noises:
             if noise == 'real':
