@@ -1,32 +1,13 @@
 import cv2
 import os
-import numpy as np
 from natsort import natsorted
 from glob import glob
-from scipy.signal import wiener
 from utils.names import getTestDatasets
+from utils.filters import getFilters
 
-def gaussian_filter(img):
-    blur = cv2.GaussianBlur(img,(5,5),1)
-    return blur
-
-def median_filter(img):
-    median = cv2.medianBlur(img,5)    
-    return median
-
-def wiener_filter(img):
-  result = np.zeros(img.shape)
-  for i in range(3):
-    result[:,:,i] = wiener(img[:,:,i], [5,5], 0)
-  return result
-
-def bilateral_filter(img):
-    bilateral = cv2.bilateralFilter(img,9,75,75)    
-    return bilateral
-
-filters = [['gaussian', gaussian_filter], ['median', median_filter], ['wiener', wiener_filter], ['bilateral', bilateral_filter]]
 images = ['barbara', 'boats', 'cablecar', 'lena', 'mandril', 'peppers']
 noise_datasets = getTestDatasets()
+filters = getFilters()
 
 inp_dir = '/content/denoise/input'
 noises = os.listdir(inp_dir)
