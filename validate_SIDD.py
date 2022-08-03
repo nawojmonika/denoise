@@ -16,6 +16,8 @@ from utils.names import getFilterName, getNetworkNames, getDatasets
 from utils.models import load_checkpoint
 
 path = '/content/output/validation'
+if not os.path.exists(path):
+  os.makedirs(path)
 results = open(os.path.join(path, 'SIDD.csv'), 'w')
 writer = csv.writer(results)
 writer.writerow(['', 'PSNR', 'SSIM'])
@@ -112,6 +114,4 @@ for name in models:
         qm_ssim = total_ssim / (40*32);
         writer.writerow([network_name, round(qm_psnr, 3), round(qm_ssim, 3)])
  
-
-
 print(f"Results saved at {path}/results.csv")
