@@ -5,26 +5,15 @@ from PIL import Image
 import os
 from runpy import run_path
 from skimage import img_as_ubyte
-from collections import OrderedDict
 from natsort import natsorted
 from glob import glob
 import cv2
 from utils.names import getTestDatasets, getDatasets, getNetworkNames
+from utils.models import load_checkpoint
 
 def save_img(filepath, img):
     cv2.imwrite(filepath,cv2.cvtColor(img, cv2.COLOR_RGB2BGR))
 
-def load_checkpoint(model, weights):
-    checkpoint = torch.load(weights)
-    try:
-        model.load_state_dict(checkpoint['state_dict'])
-    except:
-        state_dict = checkpoint['state_dict']
-        new_state_dict = OrderedDict()
-        for k, v in state_dict.items():
-            name = k[7:] # remove `module.`
-            new_state_dict[name] = v
-        model.load_state_dict(new_state_dict)
 
 def denoise(input_path, output_path):
     files = natsorted(glob(os.path.join(input_path, '*.jpg'))
