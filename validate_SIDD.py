@@ -20,7 +20,7 @@ if not os.path.exists(path):
   os.makedirs(path)
 results = open(os.path.join(path, 'SIDD.csv'), 'w')
 writer = csv.writer(results)
-writer.writerow(['', 'PSNR', 'SSIM'])
+writer.writerow(['Algorytm', 'PSNR', 'SSIM'])
 
 # Process data
 basepath = '/content/validation/SIDD'

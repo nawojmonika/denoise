@@ -14,7 +14,7 @@ networks = getNetworkNames()
 def calcResults(path, dataset = ''):
     results = open(os.path.join(path, 'results.csv'), 'w')
     writer = csv.writer(results)
-    writer.writerow(['', 'PSNR', 'SSIM'])
+    writer.writerow(['Obraz', 'PSNR', 'SSIM'])
 
     ground_path = os.path.join('/content/denoise/ground', dataset)
     ground = natsorted(glob(os.path.join(ground_path, '*.png'))
