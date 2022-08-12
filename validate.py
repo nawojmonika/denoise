@@ -12,16 +12,21 @@ from runpy import run_path
 from skimage import img_as_ubyte
 from skimage.metrics import structural_similarity
 from utils.filters import getFilters
-from utils.names import getFilterName, getNetworkNames, getDatasets
+from utils.names import getFilterName, getNetworkNames, getDatasets, getTestDatasets
 from utils.models import load_checkpoint
+
+models =  getNetworkNames()
+datasets = getDatasets()
+val_datasets = getTestDatasets()
+filters = getFilters()
+img_multiple_of = 8
+
 
 path = '/content/output/validation'
 if not os.path.exists(path):
   os.makedirs(path)
 
-datasets = getDatasets()
-
-for val_dataset in datasets:
+for val_dataset in val_datasets:
     
     results = open(os.path.join(path, val_dataset + '.csv'), 'w')
     writer = csv.writer(results)
@@ -37,8 +42,6 @@ for val_dataset in datasets:
 
     gt = np.float32(np.array(gt['ValidationGtBlocksSrgb']))
     gt /=255.
-
-    filters = getFilters()
 
     for filter in filters:
         total_psnr = 0;
@@ -63,9 +66,6 @@ for val_dataset in datasets:
         qm_psnr = total_psnr / (40*32);
         qm_ssim = total_ssim / (40*32);
         writer.writerow([getFilterName(name), round(qm_psnr, 3), round(qm_ssim, 3)])
-
-    models =  getNetworkNames()
-    img_multiple_of = 8
 
     for name in models:
         load_file = run_path(os.path.join('/content/denoise', name + '.py'))
