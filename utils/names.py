@@ -1,5 +1,5 @@
 def getDatasets():
-  return ['renoir', 'sidd', 'sidd-renoir']
+  return ['renoir', 'sidd-renoir', 'sidd']
 
 def getTestDatasets():
   return ['RENOIR', 'SIDD']

@@ -21,4 +21,4 @@ def bilateral_filter(img):
     return bilateral
 
 def getFilters():
-    return [['gaussian', gaussian_filter], ['median', median_filter], ['wiener', wiener_filter], ['bilateral', bilateral_filter]]
+    return [['bilateral', bilateral_filter], ['gaussian', gaussian_filter], ['median', median_filter], ['wiener', wiener_filter]]
