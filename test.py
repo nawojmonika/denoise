@@ -119,4 +119,4 @@ for test_dataset in test_datasets:
         qm_ssim = total_ssim / (40*32);
         writer.writerow([getFilterName(name), round(qm_psnr, 3), round(qm_ssim, 3)])
     
-    print(f"Results saved at {path}/results.csv")
+    print(f"Results saved at {path}/{test_dataset}.csv")
