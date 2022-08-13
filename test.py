@@ -34,8 +34,8 @@ for test_dataset in test_datasets:
 
     # Process data
     basepath = os.path.join('/content/test', test_dataset)
-    noisy = sio.loadmat(os.path.join(basepath, 'TestNoisyBlocksSrgb.mat'))
-    gt = sio.loadmat(os.path.join(basepath, 'TestGtBlocksSrgb.mat'))
+    noisy = sio.loadmat(os.path.join(basepath, 'testNoisyBlocksSrgb.mat'))
+    gt = sio.loadmat(os.path.join(basepath, 'testGtBlocksSrgb.mat'))
 
     Inoisy = np.float32(np.array(noisy['ValidationNoisyBlocksSrgb']))
     Inoisy /=255.
