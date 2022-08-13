@@ -17,30 +17,30 @@ from utils.models import load_checkpoint
 
 models =  getNetworkNames()
 datasets = getDatasets()
-val_datasets = getTestDatasets()
+test_datasets = getTestDatasets()
 filters = getFilters()
 img_multiple_of = 8
 
 
-path = '/content/output/validation'
+path = '/content/output/test'
 if not os.path.exists(path):
   os.makedirs(path)
 
-for val_dataset in val_datasets:
+for test_dataset in test_datasets:
     
-    results = open(os.path.join(path, val_dataset + '.csv'), 'w')
+    results = open(os.path.join(path, test_dataset + '.csv'), 'w')
     writer = csv.writer(results)
     writer.writerow(['Algorytm', 'PSNR', 'SSIM'])
 
     # Process data
-    basepath = os.path.join('/content/validation', val_dataset)
-    noisy = sio.loadmat(os.path.join(basepath, 'ValidationNoisyBlocksSrgb.mat'))
-    gt = sio.loadmat(os.path.join(basepath, 'ValidationGtBlocksSrgb.mat'))
+    basepath = os.path.join('/content/test', test_dataset)
+    noisy = sio.loadmat(os.path.join(basepath, 'testNoisyBlocksSrgb.mat'))
+    gt = sio.loadmat(os.path.join(basepath, 'testGtBlocksSrgb.mat'))
 
-    Inoisy = np.float32(np.array(noisy['ValidationNoisyBlocksSrgb']))
+    Inoisy = np.float32(np.array(noisy['testNoisyBlocksSrgb']))
     Inoisy /=255.
 
-    gt = np.float32(np.array(gt['ValidationGtBlocksSrgb']))
+    gt = np.float32(np.array(gt['testGtBlocksSrgb']))
     gt /=255.
 
     for filter in filters:
