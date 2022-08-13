@@ -17,7 +17,7 @@ def writeResults(basePath, results):
       writer = csv.writer(groupResults)
       writer.writerow(['Algorytm', 'PSNR', 'SSIM'])
       
-      for j, result in enumerate(results):
+      for result in results:
         name = getAlgorithmName(result)
         with open(result) as fd:
           reader=csv.reader(fd)
