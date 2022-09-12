@@ -1,6 +1,7 @@
 from scipy.signal import wiener
 import numpy as np
 import cv2
+import math
 
 def gaussian_filter(img):
     blur = cv2.GaussianBlur(img,(5,5),1)
@@ -13,11 +14,14 @@ def median_filter(img):
 def wiener_filter(img):
   result = np.zeros(img.shape)
   for i in range(3):
-    result[:,:,i] = wiener(img[:,:,i], [5,5], 0)
+    result[:,:,i] = wiener(img[:,:,i], 3, 0)
   return result.astype(np.uint8)
 
 def bilateral_filter(img):
-    bilateral = cv2.bilateralFilter(img,9,75,75)    
+    h, w, c = img.shape
+    sigma_r = np.mean(cv2.Scharr(img, -1, 0, 1))
+    sigma_s = math.sqrt(pow(w,2) + pow(h,2)) * 00.02
+    bilateral = cv2.bilateralFilter(img,-1,sigma_r,sigma_s)    
     return bilateral
 
 def getFilters():
