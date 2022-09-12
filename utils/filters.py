@@ -20,7 +20,7 @@ def wiener_filter(img):
 def bilateral_filter(img):
     h, w, c = img.shape
     sigma_r = np.mean(cv2.Scharr(img, -1, 0, 1))
-    sigma_s = math.sqrt(pow(w,2) + pow(h,2)) * 00.02
+    sigma_s = math.sqrt(pow(w,2) + pow(h,2)) * 0.02
     bilateral = cv2.bilateralFilter(img,-1,sigma_r,sigma_s)    
     return bilateral
 
